@@ -32,54 +32,55 @@ const Catalog = () => {
 
   return (
     <div>
-      <label htmlFor="makeFilter">Car brand</label>
-      <Select
-        id="makeFilter"
-        name="makeFilter"
-        options={optionsMakeFilter}
-        isSearchable
-        placeholder={placeholderText}
-      />
-      <label htmlFor="makePrice">Price/ 1 hour</label>
-      <Select
-        id="makePrice"
-        name="makePrice"
-        options={optionsMakePrice}
-        isSearchable={false}
-        placeholder='To $'
-        value={
-          selectPrice !== null
-            ? {
-                value: selectPrice,
-                label: `To ${selectPrice}$`,
-              }
-            : null
-        }
-        onChange={handleChange}
-      />
-      <label htmlFor="carMileage">Сar mileage / km</label>
-      <input
-        id="carMileage"
-        type="text"
-        name="from"
-        placeholder='From'
-        value={fromMile} 
-        onChange={(e) => {
-          const value = Math.max(e.target.value, 0);
-          setFromMile(value);
-        }}
-      />
-      <input
-        id="carMileage"
-        type="text"
-        name="to"
-        placeholder='To'
-        value={toMile}
-        onChange={(e) => {
-          const value = Math.max(e.target.value, 0);
-          setToMile(value);
-        }}
-      />
+      <form>
+        <label htmlFor="makeFilter">Car brand</label>
+        <Select
+          id="makeFilter"
+          name="makeFilter"
+          options={optionsMakeFilter}
+          isSearchable
+          placeholder={placeholderText}
+        />
+        <label htmlFor="makePrice">Price/ 1 hour</label>
+        <Select
+          id="makePrice"
+          name="makePrice"
+          options={optionsMakePrice}
+          isSearchable={false}
+          placeholder='To $'
+          value={
+            selectPrice !== null
+              ? {
+                  value: selectPrice,
+                  label: `To ${selectPrice}$`,
+                }
+              : null
+          }
+          onChange={handleChange}
+        />
+        <label htmlFor="carMileage">Сar mileage / km</label>
+        <span className="input-prefix">From</span>
+        <input
+          id="carMileage"
+          type="number"
+          name="from"
+          onChange={(e) => {
+            const value = Math.max(e.target.value, 0);
+            setFromMile(value);
+          }}
+        />
+        <span className="input-prefix">To</span>
+        <input
+          id="carMileage"
+          type="number"
+          name="to"
+          onChange={(e) => {
+            const value = Math.max(e.target.value, 0);
+            setToMile(value);
+          }}
+        />
+        <button type="submit">Search</button>
+      </form>
     </div>
   );
 };
