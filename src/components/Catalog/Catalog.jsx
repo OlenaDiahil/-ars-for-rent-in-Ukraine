@@ -4,8 +4,8 @@ import Select from 'react-select';
 
 const Catalog = () => {
   const [selectPrice, setSelectPrice] = useState(null);
-  const [fromMile, setFromMile] = useState('');
-  const [toMile, setToMile] = useState('');
+  // const [fromMile, setFromMile] = useState('');
+  // const [toMile, setToMile] = useState('');
 
   const handleChange = (option) => {
     setSelectPrice(option ? option.value : "");
@@ -64,20 +64,20 @@ const Catalog = () => {
           id="carMileage"
           type="number"
           name="from"
-          onChange={(e) => {
-            const value = Math.max(e.target.value, 0);
-            setFromMile(value);
-          }}
+          // onChange={(e) => {
+          //   const value = Math.max(e.target.value, 0);
+          //   setFromMile(value);
+          // }}
         />
         <span className="input-prefix">To</span>
         <input
           id="carMileage"
           type="number"
           name="to"
-          onChange={(e) => {
-            const value = Math.max(e.target.value, 0);
-            setToMile(value);
-          }}
+          // onChange={(e) => {
+          //   const value = Math.max(e.target.value, 0);
+          //   setToMile(value);
+          // }}
         />
         <button type="submit">Search</button>
       </form>
