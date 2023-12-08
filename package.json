@@ -2,7 +2,7 @@
   "name": "cars-for-rent",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://olenadiahil/cars-for-rent-in-Ukraine/",
+  "homepage": "https://olenadiahil/Cars-for-rent-in-Ukraine/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
