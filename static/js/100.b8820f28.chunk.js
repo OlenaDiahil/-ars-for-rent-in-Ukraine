@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkcars_for_rent_in_ukraine=self.webpackChunkcars_for_rent_in_ukraine||[]).push([[100],{100:(r,e,n)=>{n.r(e),n.d(e,{default:()=>a});n(791);var s=n(184);const i=()=>(0,s.jsx)("div",{children:"Favorite"}),a=()=>(0,s.jsx)("div",{children:(0,s.jsx)(i,{})})}}]);
-//# sourceMappingURL=100.b8820f28.chunk.js.map
