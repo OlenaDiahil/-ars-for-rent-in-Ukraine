@@ -24,7 +24,7 @@ const catalogSlice = createSlice({
       .addCase(setAdverts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.adverts = [...state.adverts, ...action.payload];
+        state.adverts = [...new Set([...state.adverts, ...action.payload])];
       })
       .addCase(setAdverts.rejected, handleRejected)
       .addCase(setAllAdverts.pending, handlePending)

@@ -1,116 +1,104 @@
-import React, {useState } from 'react';
-import makes from "./makes.json";
-import Select from 'react-select';
+import { useEffect, useState } from "react";
+import { AdvertsList, NoMatching } from "./Catalog.styled";
+import AdvertItem from "../AdvertItem/AdvertItem";
+import ButtonLoad from "../ButtonLoad/ButtonLoad";
+import { useDispatch, useSelector } from "react-redux";
+import { onNextPage } from "../../redux/catalog/catalogSlice";
+import { setAdverts, setAllAdverts } from "../../redux/catalog/operations";
+import Loader from "../Loader/Loader";
 import {
   selectAdverts,
+  selectAllAdverts,
+  selectFilters,
+  selectIsLoading,
+  selectPage,
 } from "../../redux/selectors";
-import { useSelector } from "react-redux";
 
-const Catalog = () => {
-  const [selectPrice, setSelectPrice] = useState('');
-  const [fromMile, setFromMile] = useState('');
-  const [toMile, setToMile] = useState('');
-  const [selectFilter, setSelectFilter] = useState('');
-  // const dispatch = useDispatch();
+function Catalog() {
+  const [isBnt, setIsBtn] = useState(true);
 
-  // const isLoading = useSelector(selectIsLoading);
-  // const page = useSelector(selectPage);
+  const dispatch = useDispatch();
+
+  const isLoading = useSelector(selectIsLoading);
+  const page = useSelector(selectPage);
   const adverts = useSelector(selectAdverts);
-  // const allAdverts = useSelector(selectAllAdverts);
+  const filters = useSelector(selectFilters);
+  const allAdverts = useSelector(selectAllAdverts);
 
-  // useEffect(() => {
-  //   if (adverts.length === 0) {
-  //     dispatch(setAllAdverts());
-  //     dispatch(setAdverts(page));
-  //   }
-  // }, [adverts.length, dispatch, page]);
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({fromMile, toMile, selectFilter, selectPrice})
-  }
+  const isFilterOn = Boolean(
+    filters.selectedMake ||
+      filters.selectedPrice ||
+      filters.minMileage ||
+      filters.maxMileage
+  );
 
-  const handleInputChange = (e) => {
-    const { name } = e.currentTarget;
-    const value = Math.max(e.target.value, 0);
-    name === "from" ? setFromMile(value) : setToMile(value);
-  };
-
-  const optionsMakeFilter = makes.map((make) => ({ value: make, label: make }));
-
-  const generatePrice = () => {
-    const minRate = 10;
-    const maxRate = 300;
-    const step = 10;
-    
-    const rates = [];
-    for (let rate = minRate; rate <= maxRate; rate += step) {
-      rates.push(rate);
+  useEffect(() => {
+    if (adverts.length === 0) {
+      dispatch(setAdverts(page));
+      dispatch(setAllAdverts());
     }
+  }, [adverts.length, dispatch, page, isFilterOn]);
 
-    return rates;
+  useEffect(() => {
+    if (page + 1 > 4 || isFilterOn) {
+      setIsBtn(false);
+    } else if (!isFilterOn) {
+      setIsBtn(true);
+    }
+  }, [isFilterOn, page]);
+
+  const onFindMore = () => {
+    if (adverts.length < allAdverts.length) {
+      dispatch(onNextPage());
+      dispatch(setAdverts(page + 1));
+    }
   };
 
-  const optionsMakePrice = generatePrice().map(rate => ({ value: rate, label: rate }));
-
-  const placeholderText = "Enter the text";
+  const filteredAdverts = allAdverts.filter((adverts) => {
+    if (filters.selectedMake && adverts.make !== filters.selectedMake) {
+      return false;
+    }
+    if (
+      filters.selectedPrice &&
+      parseInt(adverts.rentalPrice.slice(1), 10) > Number(filters.selectedPrice)
+    ) {
+      return false;
+    }
+    if (filters.minMileage && adverts.mileage < Number(filters.minMileage)) {
+      return false;
+    }
+    if (filters.maxMileage && adverts.mileage > Number(filters.maxMileage)) {
+      return false;
+    }
+    return true;
+  });
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="makeFilter">Car brand</label>
-        <Select
-          id="makeFilter"
-          name="makeFilter"
-          options={optionsMakeFilter}
-          isSearchable
-          placeholder={placeholderText}
-          onChange={(e) => setSelectFilter(e ? e.value : "")}
-        />
-        <label htmlFor="makePrice">Price/ 1 hour</label>
-        <Select
-          id="makePrice"
-          name="makePrice"
-          options={optionsMakePrice}
-          isSearchable={false}
-          placeholder='To $'
-          value={
-            selectPrice !== ''
-              ? {
-                  value: selectPrice,
-                  label: `To ${selectPrice}$`,
-                }
-              : ''
-          }
-          onChange={(e) => setSelectPrice(e ? e.value : "")}
-        />
-        <label htmlFor="carMileage">Сar mileage / km</label>
-        <span className="input-prefix">From</span>
-        <input
-          id="carMileage"
-          type="number"
-          name="from"
-          onChange={handleInputChange}
-        />
-        <span className="input-prefix">To</span>
-        <input
-          id="carMileage"
-          type="number"
-          name="to"
-          onChange={handleInputChange}
-        />
-        <button type="submit">Search</button>
-      </form>
-
-      <div>
-        <ul>
-          {(adverts).map((advert) => {
-            return <li key={advert.id} advert={advert}/>;
-          })}
-        </ul>
-      </div>
-    </div>
+    <>
+      {adverts && (
+        <>
+          {filteredAdverts.length > 0 ? (
+            <AdvertsList>
+              {(isFilterOn ? filteredAdverts : adverts).map((advert, index) => {
+                return <AdvertItem key={index} advert={advert} />;
+              })}
+            </AdvertsList>
+          ) : (
+            <>
+              {!isLoading && (
+                <NoMatching>Sorry, no matching adverts found</NoMatching>
+              )}
+            </>
+          )}
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>{isBnt && <ButtonLoad onFindMore={onFindMore} />}</>
+          )}
+        </>
+      )}
+    </>
   );
-};
+}
 
 export default Catalog;
