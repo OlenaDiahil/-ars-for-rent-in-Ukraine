@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Cars-for-rent-in-Ukraine/static/css/main.7f457bf4.css",
-    "main.js": "/Cars-for-rent-in-Ukraine/static/js/main.51e1fa24.js",
+    "main.js": "/Cars-for-rent-in-Ukraine/static/js/main.4d2a0032.js",
     "index.html": "/Cars-for-rent-in-Ukraine/index.html",
     "static/media/heart-no.svg": "/Cars-for-rent-in-Ukraine/static/media/heart-no.ac060e771360fcc26ebb0c86173c8396.svg",
     "static/media/heart-yes.svg": "/Cars-for-rent-in-Ukraine/static/media/heart-yes.623a3b874365d724c658e79a860ad4a4.svg",
     "static/media/x.svg": "/Cars-for-rent-in-Ukraine/static/media/x.f3cbdd58dc25ca7cbb3d242106b56fb9.svg",
     "main.7f457bf4.css.map": "/Cars-for-rent-in-Ukraine/static/css/main.7f457bf4.css.map",
-    "main.51e1fa24.js.map": "/Cars-for-rent-in-Ukraine/static/js/main.51e1fa24.js.map"
+    "main.4d2a0032.js.map": "/Cars-for-rent-in-Ukraine/static/js/main.4d2a0032.js.map"
   },
   "entrypoints": [
     "static/css/main.7f457bf4.css",
-    "static/js/main.51e1fa24.js"
+    "static/js/main.4d2a0032.js"
   ]
 }
