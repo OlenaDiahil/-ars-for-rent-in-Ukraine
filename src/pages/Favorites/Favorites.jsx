@@ -4,7 +4,7 @@ import {
   NoMatching,
 } from "../../components/Catalog/Catalog.styled";
 import AdvertItem from "../../components/AdvertItem/AdvertItem";
-import { AdvertsContainer, FavouritesContainer } from "./Favorites.styled";
+import { FavouritesContainer } from "./Favorites.styled";
 import { useSelector} from "react-redux";
 import { selectFavorites } from "../../redux/selectors";
 
@@ -14,7 +14,7 @@ function Favorites() {
 
   return (
     <FavouritesContainer className="container">
-      <AdvertsContainer>
+      <div>
         {favorites.length > 0 ? (
           <AdvertsList>
             {favorites.map((advert) => (
@@ -24,7 +24,7 @@ function Favorites() {
         ) : (
           <NoMatching>No matching favorites found</NoMatching>
         )}
-      </AdvertsContainer>
+      </div>
     </FavouritesContainer>
   );
 }
