@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import makes from "./makes.json";
 import {
-  ClearButton,
   FilterForm,
   InputDiv,
   InputLeft,
@@ -11,12 +10,10 @@ import {
   SearchButton,
   SelectDiv,
 } from "./CarFilter.styled";
-import clearImg from "./../../img/x.svg";
 import MySelect from "../MySelect/MySelect";
 import MySelectMake from "../MySelectMake/MySelectMake";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectFilters } from "../../redux/selectors";
-import { resetFilters } from "../../redux/filters/filtersSlice";
 
 const CarFilter = ({ onFilterChange }) => {
   const [selectedMake, setSelectedMake] = useState("");
@@ -24,7 +21,6 @@ const CarFilter = ({ onFilterChange }) => {
   const [minMileage, setMinMileage] = useState("");
   const [maxMileage, setMaxMileage] = useState("");
 
-  const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
 
   useEffect(() => {
@@ -51,12 +47,6 @@ const CarFilter = ({ onFilterChange }) => {
     };
 
     onFilterChange(filters);
-  };
-
-  const clearFilters = (e) => {
-    e.preventDefault();
-    console.log("clear");
-    dispatch(resetFilters());
   };
 
   return (
@@ -105,9 +95,6 @@ const CarFilter = ({ onFilterChange }) => {
           </div>
         </SelectDiv>
         <SearchButton type="submit">Search</SearchButton>
-        <ClearButton onClick={clearFilters}>
-          <img src={clearImg} alt="clear" />
-        </ClearButton>
       </FilterForm>
     </div>
   );
